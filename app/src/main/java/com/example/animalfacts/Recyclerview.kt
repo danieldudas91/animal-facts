@@ -6,7 +6,20 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
+class AnimalViewAdapter(private val dataSet: Array<Animal>): RecyclerView.Adapter<AnimalViewHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AnimalViewHolder {
+        return AnimalViewHolder.create(parent)
+    }
 
+    override fun onBindViewHolder(holder: AnimalViewHolder, position: Int) {
+        val current: Animal = dataSet[position]
+        holder.bind(current.name)
+    }
+
+    override fun getItemCount(): Int {
+        return dataSet.size
+    }
+}
 class AnimalViewHolder(itemView: View,
                        private val nameTextView: TextView =
                            itemView.findViewById(R.id.textView)) : RecyclerView.ViewHolder(itemView) {
