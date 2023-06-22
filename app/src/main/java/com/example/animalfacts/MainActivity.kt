@@ -14,4 +14,10 @@ class MainActivity() : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
     }
+    private fun createAnimalArray(): Array<Animal> {
+        return arrayOf(Animal("Lion"), Animal("Tiger"), Animal("Zebra"))
+    }
 }
+
+
+class Animal(val name: String) {}
