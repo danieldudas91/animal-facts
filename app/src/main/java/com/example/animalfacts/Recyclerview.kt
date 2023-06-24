@@ -6,13 +6,13 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class AnimalViewAdapter(private val dataSet: Array<Animal>): RecyclerView.Adapter<AnimalViewHolder>() {
+class AnimalViewAdapter(val dataSet: MutableList<AnimalResponse> = mutableListOf()): RecyclerView.Adapter<AnimalViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AnimalViewHolder {
         return AnimalViewHolder.create(parent)
     }
 
     override fun onBindViewHolder(holder: AnimalViewHolder, position: Int) {
-        val current: Animal = dataSet[position]
+        val current: AnimalResponse = dataSet[position]
         holder.bind(current.name)
     }
 
@@ -23,7 +23,7 @@ class AnimalViewAdapter(private val dataSet: Array<Animal>): RecyclerView.Adapte
 class AnimalViewHolder(itemView: View,
                        private val nameTextView: TextView =
                            itemView.findViewById(R.id.textView)) : RecyclerView.ViewHolder(itemView) {
-    fun bind(name : String){
+    fun bind(name : String?){
         nameTextView.text = name
     }
 
