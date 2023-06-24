@@ -21,13 +21,13 @@ class MainActivity : AppCompatActivity() {
         input = findViewById(R.id.input)
         button = findViewById(R.id.button)
         recyclerView = findViewById(R.id.recyclerview)
-        recyclerView.adapter = AnimalViewAdapter(createAnimalArray())
+        val adapter = AnimalViewAdapter()
+        recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
+        animalViewModel.animals.observe(this) {animals ->
+            adapter.dataSet.clear()
+            adapter.dataSet.addAll(animals)
+            adapter.notifyDataSetChanged()
+            }
+        }
     }
-    private fun createAnimalArray(): Array<Animal> {
-        return arrayOf(Animal("Lion"), Animal("Tiger"), Animal("Zebra"))
-    }
-}
-
-
-class Animal(val name: String) {}
