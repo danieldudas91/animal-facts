@@ -10,7 +10,10 @@ import retrofit2.Response
 class AnimalViewModel: ViewModel(){
     val animals: MutableLiveData<List<AnimalResponse>> = MutableLiveData()
     var animalName: String = ""
-
+        set(value) {
+            field = value
+            getData()
+        }
     private fun getData(){
         if (animalName != ""){
             val call: Call<List<AnimalResponse>> = ApiConfig.getApiService().getAnimalData(animalName)
