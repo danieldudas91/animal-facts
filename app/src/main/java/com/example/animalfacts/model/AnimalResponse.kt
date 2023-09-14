@@ -1,4 +1,4 @@
-package com.example.animalfacts
+package com.example.animalfacts.model
 
 import com.google.gson.annotations.SerializedName
 
