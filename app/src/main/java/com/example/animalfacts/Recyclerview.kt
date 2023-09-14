@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.animalfacts.model.AnimalResponse
 
 class AnimalViewAdapter(val dataSet: MutableList<AnimalResponse> = mutableListOf()): RecyclerView.Adapter<AnimalViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AnimalViewHolder {
