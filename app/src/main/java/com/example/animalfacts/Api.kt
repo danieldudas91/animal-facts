@@ -1,5 +1,6 @@
 package com.example.animalfacts
 
+import com.example.animalfacts.model.AnimalResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Headers
@@ -10,8 +11,9 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 
 
+private const val HEADER = "X-API-KEY: Sst4oe/JED7Mpk9jG86a9A==tLrnx83BO5Pugpg5"
 interface ApiService {
-    @Headers("X-API-KEY: Sst4oe/JED7Mpk9jG86a9A==tLrnx83BO5Pugpg5")
+    @Headers(HEADER)
     @GET("animals")
     fun getAnimalData(
         @Query("name") name: String
@@ -20,6 +22,7 @@ interface ApiService {
 
 class ApiConfig {
     companion object {
+        private var baseUrl = "https://api.api-ninjas.com/v1/"
         fun getApiService(): ApiService {
 
             val loggingInterceptor = HttpLoggingInterceptor()
@@ -30,7 +33,7 @@ class ApiConfig {
                 .build()
 
             val retrofit = Retrofit.Builder()
-                .baseUrl("https://api.api-ninjas.com/v1/")
+                .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build()
