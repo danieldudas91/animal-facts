@@ -2,9 +2,12 @@ package com.example.animalfacts
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.example.animalfacts.model.AnimalResponse
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import retrofit2.await
 
 
 class AnimalViewModel: ViewModel(){
@@ -12,22 +15,16 @@ class AnimalViewModel: ViewModel(){
     var animalName: String = ""
         set(value) {
             field = value
-            getData()
+            getAnimalData()
         }
-    private fun getData(){
-        if (animalName != ""){
-            val call: Call<List<AnimalResponse>> = ApiConfig.getApiService().getAnimalData(animalName)
-            call.enqueue(object : Callback<List<AnimalResponse>> {
-                override fun onResponse(
-                    call: Call<List<AnimalResponse>>,
-                    response: Response<List<AnimalResponse>>
-                ) {
-                    animals.postValue(response.body())
-                }
-                override fun onFailure(call: Call<List<AnimalResponse>>, t: Throwable) {
-                    t.printStackTrace()
-                }
-            })
+
+    @OptIn(DelicateCoroutinesApi::class)
+    private fun getAnimalData(){
+        if(animalName != ""){
+            GlobalScope.launch(Dispatchers.IO) {
+                val animalResponseData = ApiConfig.getApiService().getAnimalData(animalName).await()
+                animals.postValue(animalResponseData)
+            }
         }
     }
 }
