@@ -1,8 +1,8 @@
-package com.example.animalfacts
+package com.example.animalfacts.viewmodel
 
 import androidx.compose.runtime.mutableStateListOf
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.animalfacts.ApiConfig
 import com.example.animalfacts.model.AnimalResponse
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
