@@ -1,7 +1,8 @@
-package com.example.animalfacts
+package com.example.animalfacts.viewmodel
 
-import androidx.lifecycle.MutableLiveData
+import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
+import com.example.animalfacts.ApiConfig
 import com.example.animalfacts.model.AnimalResponse
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
@@ -11,7 +12,7 @@ import retrofit2.await
 
 
 class AnimalViewModel: ViewModel(){
-    val animals: MutableLiveData<List<AnimalResponse>> = MutableLiveData()
+    val animals = mutableStateListOf<AnimalResponse>()
     var animalName: String = ""
         set(value) {
             field = value
@@ -23,7 +24,8 @@ class AnimalViewModel: ViewModel(){
         if(animalName != ""){
             GlobalScope.launch(Dispatchers.IO) {
                 val animalResponseData = ApiConfig.getApiService().getAnimalData(animalName).await()
-                animals.postValue(animalResponseData)
+                animals.clear()
+                animals.addAll(animalResponseData)
             }
         }
     }
