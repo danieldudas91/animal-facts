@@ -41,7 +41,18 @@ data class Taxonomy(
 
 	@field:SerializedName("order")
 	val order: String? = null
-): Serializable
+): Serializable{
+	override fun toString(): String {
+		return """
+			kingdom: $kingdom
+			class: $jsonMemberClass
+			order: $order
+			family: $family
+			genus: $genus
+			phylum: $phylum
+		""".trimIndent()
+	}
+}
 
 data class Characteristics(
 
@@ -116,4 +127,33 @@ data class Characteristics(
 
 	@field:SerializedName("height")
 	val height: String? = null
-): Serializable
+): Serializable{
+	override fun toString(): String {
+		return """
+			most distinctive feature: $mostDistinctiveFeature
+			prey: $prey
+			habitat: $habitat
+			average litter size: $averageLitterSize
+			group behavior: $groupBehavior
+			color: $color
+			lifespan: $lifespan
+			estimated population size: $estimatedPopulationSize
+			biggest threat: $biggestThreat
+			weight: $weight
+			age of sexual maturity: $ageOfSexualMaturity
+			skin type: $skinType
+			lifestyle: $lifestyle
+			number of species: $numberOfSpecies
+			age of weaning: $ageOfWeaning
+			gestation period: $gestationPeriod
+			top speed: $topSpeed
+			location: $location
+			diet: $diet
+			common name: $commonName
+			slogan: $slogan
+			group: $group
+			height: $height
+			
+		""".trimIndent()
+	}
+}
