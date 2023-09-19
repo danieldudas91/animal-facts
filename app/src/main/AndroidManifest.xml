@@ -14,6 +14,11 @@
         android:theme="@android:style/Theme.Holo.Light.DarkActionBar"
         tools:targetApi="31">
         <activity
+            android:name=".AnimalDetailsActivity"
+            android:exported="false"
+            android:label="@string/title_activity_animal_details"
+            android:theme="@android:style/Theme.Holo.Light.DarkActionBar" />
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
