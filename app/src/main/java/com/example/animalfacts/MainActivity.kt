@@ -1,5 +1,6 @@
 package com.example.animalfacts
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
@@ -18,6 +20,10 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.animalfacts.viewmodel.AnimalViewModel
@@ -30,9 +36,15 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            Column {
+            val myContext = LocalContext.current
+
+            Column (
+                horizontalAlignment = Alignment.CenterHorizontally
+            ){
                 var textFieldState by remember { mutableStateOf("") }
                 var lazyColumnState =  viewModel.animals
+
+
                 TextField(
                     value = textFieldState,
                     label = {
@@ -51,21 +63,30 @@ class MainActivity : ComponentActivity() {
                         Log.d("Tag", textFieldState)
                         viewModel.animalName = textFieldState
                     },
-                    modifier = Modifier.align(Alignment.CenterHorizontally)
                 ) {
                     Text("Search")
                 }
-                LazyColumn(modifier = Modifier.align(Alignment.CenterHorizontally)) {
+                LazyColumn (
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ){
                     itemsIndexed(
                         lazyColumnState
-                    ) { _, string ->
-                        string.name?.let {
-                            Text(
-                                it,
+                    ) { _, animal ->
+
+                            ClickableText(
+                                onClick = {
+                                    val intent = Intent(myContext, AnimalDetailsActivity::class.java)
+                                    intent.putExtra("animal", animal)
+                                    myContext.startActivity(intent)
+                                },
+                                text = AnnotatedString(animal.name.toString()),
                                 modifier = Modifier.fillMaxWidth(),
-                                color= Color.Black,
-                                fontSize = 16.sp)
-                        }
+                                style = TextStyle(
+                                    color = Color.Black,
+                                    fontSize = 16.sp,
+                                    textAlign = TextAlign.Center
+                                )
+                            )
                     }
                 }
             }
