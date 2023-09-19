@@ -1,6 +1,7 @@
 package com.example.animalfacts.model
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class AnimalResponse(
 
@@ -15,7 +16,8 @@ data class AnimalResponse(
 
 	@field:SerializedName("taxonomy")
 	val taxonomy: Taxonomy? = null
-)
+): Serializable{
+}
 
 data class Taxonomy(
 
@@ -39,7 +41,7 @@ data class Taxonomy(
 
 	@field:SerializedName("order")
 	val order: String? = null
-)
+): Serializable
 
 data class Characteristics(
 
@@ -114,4 +116,4 @@ data class Characteristics(
 
 	@field:SerializedName("height")
 	val height: String? = null
-)
+): Serializable
