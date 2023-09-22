@@ -2,6 +2,7 @@ package com.example.animalfacts.viewmodel
 
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
+import com.example.animalfacts.AnimalResponseCache
 import com.example.animalfacts.ApiConfig
 import com.example.animalfacts.model.AnimalResponse
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -23,9 +24,17 @@ class AnimalViewModel: ViewModel(){
     private fun getAnimalData(){
         if(animalName != ""){
             GlobalScope.launch(Dispatchers.IO) {
+                val cache = AnimalResponseCache.animalCache
+                val animalsInCache = cache[animalName]
+                if (animalsInCache != null){
+                    animals.clear()
+                    animals.addAll(animalsInCache)
+                    return@launch
+                }
                 val animalResponseData = ApiConfig.getApiService().getAnimalData(animalName).await()
                 animals.clear()
                 animals.addAll(animalResponseData)
+                cache[animalName] = animalResponseData
             }
         }
     }

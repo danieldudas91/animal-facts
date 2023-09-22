@@ -153,7 +153,6 @@ data class Characteristics(
 			slogan: $slogan
 			group: $group
 			height: $height
-			
 		""".trimIndent()
 	}
 }
