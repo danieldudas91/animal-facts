@@ -5,8 +5,12 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.animalfacts.model.AnimalResponse
 import com.example.animalfacts.model.Characteristics
 import com.example.animalfacts.model.Taxonomy
@@ -45,10 +49,11 @@ fun formatPropertyName(property: String): String{
 @Composable
 fun TaxonomyText(taxonomy: Taxonomy?) {
     val taxonomyProperties = Taxonomy::class.memberProperties
-    Column {
+    Column (modifier = Modifier.padding(horizontal = 20.dp, vertical = 5.dp)){
+        Text("Taxonomy", fontSize = 20.sp)
         taxonomyProperties.forEach {
             Row {
-                Text(text = "${it.name} :")
+                Text(text = "${formatPropertyName(it.name)} : ")
                 if (taxonomy != null) {
                     Text(text = it.get(taxonomy).toString())
                 }
@@ -60,12 +65,17 @@ fun TaxonomyText(taxonomy: Taxonomy?) {
 @Composable
 fun CharacteristicsText(characteristics: Characteristics?) {
     val characteristicsProperties = Characteristics::class.memberProperties
-    Column {
+    Column(modifier = Modifier.padding(horizontal = 20.dp)) {
+        Text("Characteristics", fontSize = 20.sp)
         characteristicsProperties.forEach {
             Row {
-                Text(text = "${it.name} :")
-                if (characteristics != null) {
-                    Text(text = it.get(characteristics).toString())
+                if(it.name != "location"){
+                    if (characteristics != null) {
+                        if (it.get(characteristics) != null){
+                            Text(text = "${formatPropertyName(it.name)} : ")
+                            Text(text = it.get(characteristics).toString())
+                        }
+                    }
                 }
             }
         }
@@ -74,7 +84,10 @@ fun CharacteristicsText(characteristics: Characteristics?) {
 
 @Composable
 fun LocationsText(locations: List<String?>?) {
-    if(locations != null){
-        Text(text = locations.joinToString(", "))
+    Column(modifier = Modifier.padding(horizontal = 20.dp, vertical = 5.dp)){
+        Text("Locations", fontSize = 20.sp)
+        if(locations != null){
+            Text(text = locations.joinToString(", "))
+        }
     }
 }
