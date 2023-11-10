@@ -29,6 +29,19 @@ class AnimalDetailsActivity : ComponentActivity() {
     }
 }
 
+fun formatPropertyName(property: String): String{
+    var result = ""
+    for (l in property){
+        if(l.isUpperCase()){
+            result += " ${l.lowercase()}"
+        }
+        else{
+            result += l
+        }
+    }
+    return result
+}
+
 @Composable
 fun TaxonomyText(taxonomy: Taxonomy?) {
     val taxonomyProperties = Taxonomy::class.memberProperties
