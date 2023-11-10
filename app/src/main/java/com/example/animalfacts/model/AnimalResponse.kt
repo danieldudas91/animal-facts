@@ -21,27 +21,26 @@ data class AnimalResponse(
 
 data class Taxonomy(
 
+	@field:SerializedName("kingdom")
+	val kingdom: String? = null,
+
 	@field:SerializedName("phylum")
 	val phylum: String? = null,
+
+	@field:SerializedName("class")
+	val `class`: String? = null,
+
+	@field:SerializedName("order")
+	val order: String? = null,
+
+	@field:SerializedName("family")
+	val family: String? = null,
 
 	@field:SerializedName("genus")
 	val genus: String? = null,
 
 	@field:SerializedName("scientific_name")
 	val scientificName: String? = null,
-
-	@field:SerializedName("family")
-	val family: String? = null,
-
-	@field:SerializedName("kingdom")
-	val kingdom: String? = null,
-
-	@field:SerializedName("class")
-	val jsonMemberClass: String? = null,
-
-	@field:SerializedName("order")
-	val order: String? = null
-
 ): Serializable
 
 data class Characteristics(
