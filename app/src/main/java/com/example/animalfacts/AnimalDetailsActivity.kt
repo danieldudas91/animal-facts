@@ -5,7 +5,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -33,29 +35,35 @@ class AnimalDetailsActivity : ComponentActivity() {
     }
 }
 
-fun formatPropertyName(property: String): String{
+private fun formatPropertyName(property: String): String {
     var result = ""
-    for (l in property){
-        if(l.isUpperCase()){
+    for (l in property) {
+        if (l.isUpperCase()) {
             result += " ${l.lowercase()}"
-        }
-        else{
+        } else {
             result += l
         }
     }
     return result
 }
 
+
+private val cardModifier = Modifier
+    .fillMaxWidth()
+    .padding(start = 10.dp, top = 20.dp, end = 10.dp)
+
 @Composable
 fun TaxonomyText(taxonomy: Taxonomy?) {
     val taxonomyProperties = Taxonomy::class.memberProperties
-    Column (modifier = Modifier.padding(horizontal = 20.dp, vertical = 5.dp)){
-        Text("Taxonomy", fontSize = 20.sp)
-        taxonomyProperties.forEach {
-            Row {
-                Text(text = "${formatPropertyName(it.name)} : ")
-                if (taxonomy != null) {
-                    Text(text = it.get(taxonomy).toString())
+    Card(modifier = cardModifier) {
+        Column(modifier = Modifier.padding(horizontal = 20.dp, vertical = 5.dp)) {
+            Text("Taxonomy", fontSize = 20.sp)
+            taxonomyProperties.forEach {
+                Row {
+                    Text(text = "${formatPropertyName(it.name)} : ")
+                    if (taxonomy != null) {
+                        Text(text = it.get(taxonomy).toString())
+                    }
                 }
             }
         }
@@ -65,15 +73,17 @@ fun TaxonomyText(taxonomy: Taxonomy?) {
 @Composable
 fun CharacteristicsText(characteristics: Characteristics?) {
     val characteristicsProperties = Characteristics::class.memberProperties
-    Column(modifier = Modifier.padding(horizontal = 20.dp)) {
-        Text("Characteristics", fontSize = 20.sp)
-        characteristicsProperties.forEach {
-            Row {
-                if(it.name != "location"){
-                    if (characteristics != null) {
-                        if (it.get(characteristics) != null){
-                            Text(text = "${formatPropertyName(it.name)} : ")
-                            Text(text = it.get(characteristics).toString())
+    Card(modifier = cardModifier) {
+        Column(modifier = Modifier.padding(horizontal = 20.dp)) {
+            Text("Characteristics", fontSize = 20.sp)
+            characteristicsProperties.forEach {
+                Row {
+                    if (it.name != "location") {
+                        if (characteristics != null) {
+                            if (it.get(characteristics) != null) {
+                                Text(text = "${formatPropertyName(it.name)} : ")
+                                Text(text = it.get(characteristics).toString())
+                            }
                         }
                     }
                 }
@@ -84,10 +94,12 @@ fun CharacteristicsText(characteristics: Characteristics?) {
 
 @Composable
 fun LocationsText(locations: List<String?>?) {
-    Column(modifier = Modifier.padding(horizontal = 20.dp, vertical = 5.dp)){
-        Text("Locations", fontSize = 20.sp)
-        if(locations != null){
-            Text(text = locations.joinToString(", "))
+    Card(modifier = cardModifier) {
+        Column(modifier = Modifier.padding(horizontal = 20.dp, vertical = 5.dp)) {
+            Text("Locations", fontSize = 20.sp)
+            if (locations != null) {
+                Text(text = locations.joinToString(", "))
+            }
         }
     }
 }
