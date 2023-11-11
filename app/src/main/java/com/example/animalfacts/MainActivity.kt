@@ -5,13 +5,19 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -21,6 +27,7 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
@@ -40,25 +47,43 @@ class MainActivity : ComponentActivity() {
         setContent {
             val myContext = LocalContext.current
             val viewModel = hiltViewModel<AnimalViewModel>()
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                var lazyColumnState = viewModel.animals
-                var state = inputField("Enter animal name")
-
-                MyButton(text = "Search", onClick = {
-                    viewModel.animalName = state
-                })
-                ClickableList(stateList = lazyColumnState, context = myContext)
+            Card(modifier = cardModifier) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    var lazyColumnState = viewModel.animals
+                    Row{
+                        var state = inputField("Enter animal name", inputFieldModifier)
+                        MyButton(
+                            text = "Search",
+                            modifier = Modifier.padding(start = 10.dp, top = 21.dp),
+                            onClick = {
+                            viewModel.animalName = state
+                        })
+                    }
+                    Text("List of animals", fontSize = 20.sp)
+                    ClickableList(stateList = lazyColumnState, context = myContext)
+                }
             }
-
         }
     }
 }
 
+private val cardModifier = Modifier
+    .fillMaxSize()
+    .padding(start = 10.dp, top = 20.dp, end = 10.dp, bottom = 20.dp)
+
+private val inputFieldModifier = Modifier
+    .padding(20.dp)
+    .width(220.dp)
+    .background(Color.White)
+    .border(1.dp, Color.Black, RectangleShape)
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun inputField(text: String): String {
+fun inputField(
+    text: String,
+    modifier: Modifier): String {
     var textFieldState by remember { mutableStateOf("") }
     TextField(
         value = textFieldState,
@@ -69,10 +94,7 @@ fun inputField(text: String): String {
             textFieldState = it
         },
         singleLine = true,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(20.dp),
-    )
+        modifier = modifier)
     return textFieldState
 }
 
@@ -101,7 +123,7 @@ fun ClickableList(
                 style = TextStyle(
                     color = Color.Black,
                     fontSize = 16.sp,
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Left
                 )
             )
         }
@@ -111,10 +133,12 @@ fun ClickableList(
 @Composable
 fun MyButton(
     text: String,
+    modifier: Modifier,
     onClick: () -> Unit
 ){
     Button(
         onClick = onClick,
+        modifier = modifier
     ) {
         Text(text)
     }
