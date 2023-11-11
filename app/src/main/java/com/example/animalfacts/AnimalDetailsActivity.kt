@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,7 +28,9 @@ class AnimalDetailsActivity : ComponentActivity() {
             val intent = intent
             val animal = intent.getSerializableExtra("animal") as AnimalResponse
 
-            Column {
+            Column(
+                modifier = Modifier.verticalScroll(rememberScrollState())
+            ) {
                 TaxonomyText(taxonomy = animal.taxonomy)
                 CharacteristicsText(characteristics = animal.characteristics)
                 LocationsText(locations = animal.locations)
