@@ -34,7 +34,14 @@ class AnimalDetailsActivity : ComponentActivity() {
         }
     }
 }
-
+fun String.hasUpperCase(): Boolean{
+    val chars = this.toCharArray()
+    val charSize = chars.filter { it.isUpperCase() }.size
+    if (charSize > 0) {
+        return true
+    }
+    return false
+}
 private fun formatPropertyName(property: String): String {
     var result = ""
     for (l in property) {
