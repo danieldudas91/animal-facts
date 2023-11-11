@@ -43,6 +43,7 @@ fun String.hasUpperCase(): Boolean{
     return false
 }
 private fun formatPropertyName(property: String): String {
+    if (!property.hasUpperCase()) return property
     var result = ""
     for (l in property) {
         if (l.isUpperCase()) {
