@@ -47,6 +47,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             val myContext = LocalContext.current
             val viewModel = hiltViewModel<AnimalViewModel>()
+            val isLoading = viewModel.isLoading.value
             Card(modifier = cardModifier) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally
@@ -62,7 +63,15 @@ class MainActivity : ComponentActivity() {
                         })
                     }
                     Text("List of animals", fontSize = 20.sp)
-                    ClickableList(stateList = lazyColumnState, context = myContext)
+                    if (isLoading){
+                        CircularProgressIndicator(
+                            modifier = Modifier.width(64.dp),
+                            color = MaterialTheme.colorScheme.secondary,
+                        )
+                    }
+                    else {
+                        ClickableList(stateList = lazyColumnState, context = myContext)
+                    }
                 }
             }
         }
@@ -109,7 +118,6 @@ fun ClickableList(
         itemsIndexed(
             stateList
         ) { _, animal ->
-
             ClickableText(
                 onClick = {
                     Intent(context, AnimalDetailsActivity::class.java).apply {
