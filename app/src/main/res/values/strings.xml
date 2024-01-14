@@ -1,6 +1,4 @@
 <resources>
     <string name="app_name">Animal Facts</string>
-    <string name="enter_species">Enter species</string>
-    <string name="search">Search</string>
     <string name="title_activity_animal_details">AnimalDetailsActivity</string>
 </resources>
