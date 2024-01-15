@@ -1,5 +1,6 @@
 package com.example.animalfacts
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -34,6 +36,14 @@ class AnimalDetailsActivity : ComponentActivity() {
                 TaxonomyText(taxonomy = animal.taxonomy)
                 CharacteristicsText(characteristics = animal.characteristics)
                 LocationsText(locations = animal.locations)
+                Button(modifier= Modifier.padding(start = 10.dp, top = 20.dp, end = 10.dp),
+                    onClick = {
+                    Intent(applicationContext, MainActivity::class.java).apply {
+                        applicationContext.startActivity(this)
+                    }
+                }) {
+                    Text("Back to main page")
+                }
             }
         }
     }
