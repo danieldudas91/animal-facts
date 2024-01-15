@@ -103,8 +103,16 @@ fun CharacteristicsText(characteristics: Characteristics?) {
                     if (it.name != "location") {
                         if (characteristics != null) {
                             if (it.get(characteristics) != null) {
+                                val value = it.get(characteristics).toString()
                                 Text(text = "${formatPropertyName(it.name)} : ")
-                                Text(text = it.get(characteristics).toString())
+                                if (it.name == "color"){
+                                    Text(value
+                                        .split("(?<=.)(?=\\p{Lu})".toRegex())
+                                        .joinToString())
+                                }
+                                else{
+                                    Text(text = value)
+                                }
                             }
                         }
                     }
